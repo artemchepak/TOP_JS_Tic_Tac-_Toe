@@ -1,4 +1,4 @@
-let turnTracker = 0;
+let turnTracker = 1;
 let winner = null;
 
 let Gameboard = {
@@ -24,7 +24,7 @@ let Game = {
         if (input.trim().toUpperCase() === 'START') {
             Gameboard.drawBoard();
             this.runGame();
-        } 
+        }
         else {
             this.startGame();
         }
@@ -35,7 +35,15 @@ let Game = {
         let arrayIndexTwo = Gameboard.boardMarker.indexOf(userChoice[0]);
         let boardCell = Gameboard.gameboard[arrayIndexOne][arrayIndexTwo];
         if (this.userInputValidation(boardCell)) {
-            Gameboard.gameboard[arrayIndexOne][arrayIndexTwo] = Players.playerOne.marker;
+            let value;
+            if (turnTracker === 1) {
+                value = Players.playerOne.marker;
+                turnTracker++;
+            } else if (turnTracker === 2) {
+                value = Players.playerTwo.marker;
+                turnTracker--;
+            }
+            Gameboard.gameboard[arrayIndexOne][arrayIndexTwo] = value;
             Gameboard.drawBoard();
             this.checkWinner();
         }
@@ -82,23 +90,21 @@ let Game = {
             Gameboard.gameboard[1][1],
             Gameboard.gameboard[0][2]
         ]);
-    
+
         function checkPlayerOne(element) {
             return element === Players.playerOne.marker;
         }
         function checkPlayerTwo(element) {
             return element === Players.playerTwo.marker;
         }
-    
-        let winner;
-    
+
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].every(checkPlayerOne)) {
                 winner = Players.playerOne.name;
                 break;
             }
         }
-    
+
         if (winner === null) {
             for (let i = 0; i < lines.length; i++) {
                 if (lines[i].every(checkPlayerTwo)) {
@@ -107,13 +113,13 @@ let Game = {
                 }
             }
         }
-    
+
         if (winner) {
             console.log(`Winner is ${winner}`);
             this.restartGame();
         }
     },
-    restartGame: function(){
+    restartGame: function () {
         winner = null;
         Gameboard.gameboard = [
             [0, 0, 0],
@@ -134,6 +140,8 @@ const Players = {
         name: "jenn",
         marker: "O"
     }
+
+
 }
 
 Game.startGame();
