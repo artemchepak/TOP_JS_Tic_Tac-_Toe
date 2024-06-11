@@ -1,5 +1,5 @@
 let turnTracker = 0;
-let winner;
+let winner = null;
 
 let Gameboard = {
     gameboard: [
@@ -24,6 +24,9 @@ let Game = {
         if (input.trim().toUpperCase() === 'START') {
             Gameboard.drawBoard();
             this.runGame();
+        } 
+        else {
+            this.startGame();
         }
     },
     makeChoice: function () {
@@ -42,7 +45,7 @@ let Game = {
         }
     },
     runGame: function () {
-        while (winner === undefined) {
+        while (winner === null) {
             this.makeChoice();
         }
     },
@@ -96,7 +99,7 @@ let Game = {
             }
         }
     
-        if (!winner) {
+        if (winner === null) {
             for (let i = 0; i < lines.length; i++) {
                 if (lines[i].every(checkPlayerTwo)) {
                     winner = Players.playerTwo.name;
@@ -107,7 +110,17 @@ let Game = {
     
         if (winner) {
             console.log(`Winner is ${winner}`);
+            this.restartGame();
         }
+    },
+    restartGame: function(){
+        winner = null;
+        Gameboard.gameboard = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ];
+        this.startGame();
     }
 }
 
