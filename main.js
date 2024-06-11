@@ -67,59 +67,29 @@ let Game = {
             return false;
         }
     },
-    checkWinner: function () {
-        let lines = [];
-        //Adding horizontal lines to array of lines 
-        for (let i = 0; i < Gameboard.gameboard.length; i++) {
-            lines.push(Gameboard.gameboard[i]);
-        }
-        //Adding vertical lines to array of lines 
-        for (let columnIndex = 0; columnIndex < 3; columnIndex++) {
-            let array = [];
-            for (let i = 0; i < 3; i++) {
-                array.push(Gameboard.gameboard[i][columnIndex]);
-            }
-            lines.push(array);
-        }
-        //Adding diagonal lines to array of lines 
-        lines.push([
-            Gameboard.gameboard[0][0],
-            Gameboard.gameboard[1][1],
-            Gameboard.gameboard[2][2]
-        ]);
-        lines.push([
-            Gameboard.gameboard[2][0],
-            Gameboard.gameboard[1][1],
-            Gameboard.gameboard[0][2]
-        ]);
+    checkWinner() {
+        const lines = [
+            ...Gameboard.gameboard, // Rows
+            ...Gameboard.boardMarker.map((_, i) => Gameboard.gameboard.map(row => row[i])), // Columns
+            [0, 1, 2].map(i => Gameboard.gameboard[i][i]), // Diagonal 1
+            [0, 1, 2].map(i => Gameboard.gameboard[i][2 - i]) // Diagonal 2
+        ];
 
-        function checkPlayerOne(element) {
-            return element === Players.playerOne.marker;
-        }
-        function checkPlayerTwo(element) {
-            return element === Players.playerTwo.marker;
-        }
-
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].every(checkPlayerOne)) {
+        for (const line of lines) {
+            if (line.every(cell => cell === Players.playerOne.marker)) {
                 winner = Players.playerOne.name;
                 break;
-            }
-        }
-
-        if (winner === null) {
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].every(checkPlayerTwo)) {
-                    winner = Players.playerTwo.name;
-                    break;
-                }
+            } else if (line.every(cell => cell === Players.playerTwo.marker)) {
+                winner = Players.playerTwo.name;
+                break;
             }
         }
 
         if (winner) {
             console.log(`Winner is ${winner}`);
-            this.restartGame();
+            return true;
         }
+        return false;
     },
     checkTie: function () {
         if (winner === null) {
