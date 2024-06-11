@@ -53,6 +53,7 @@ let Game = {
         }
     },
     runGame: function () {
+        Players.pickPlayer();
         while (winner === null) {
             this.makeChoice();
         }
@@ -135,13 +136,23 @@ const Players = {
         name: "tim",
         marker: "X"
     },
-
     playerTwo: {
         name: "jenn",
         marker: "O"
+    },
+    pickPlayer: function () {
+        let input = prompt('Pick the player who plays first. Enter X or O');
+        if (input.trim().toUpperCase() === 'X') {
+            turnTracker = 1;
+        }
+        else if (input.trim().toUpperCase() === 'O') {
+            turnTracker = 2;
+        }
+        else {
+            alert('Enter valid marker');
+            this.pickPlayer();
+        }
     }
-
-
 }
 
 Game.startGame();
