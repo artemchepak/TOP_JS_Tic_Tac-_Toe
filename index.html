@@ -7,6 +7,39 @@
     <title>Project: Tic Tac Toe</title>
 </head>
 <body>
+    <div class="container">
+        <div id="game-info">
+            <h1>Tic Tac Toe</h1>
+            <div class="input-group">
+                <label for="player-one-name">Player 1 Name: </label>
+                <input type="text" id="player-one-name" placeholder="Player 1">
+            </div>
+            <div class="input-group">
+                <label for="player-two-name">Player 2 Name: </label>
+                <input type="text" id="player-two-name" placeholder="Player 2">
+            </div>
+            <button id="start-game">Start Game</button>
+            <div id="turn-info"></div>
+            <div id="result-info"></div>
+        </div>
+        <div id="game-board">
+            <div class="row">
+                <div class="cell" data-cell="a1"></div>
+                <div class="cell" data-cell="a2"></div>
+                <div class="cell" data-cell="a3"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-cell="b1"></div>
+                <div class="cell" data-cell="b2"></div>
+                <div class="cell" data-cell="b3"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-cell="c1"></div>
+                <div class="cell" data-cell="c2"></div>
+                <div class="cell" data-cell="c3"></div>
+            </div>
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
