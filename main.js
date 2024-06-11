@@ -46,6 +46,7 @@ let Game = {
             Gameboard.gameboard[arrayIndexOne][arrayIndexTwo] = value;
             Gameboard.drawBoard();
             this.checkWinner();
+            this.checkTie();
         }
         else {
             alert('The cell is already chosen. Pick Another cell');
@@ -118,6 +119,21 @@ let Game = {
         if (winner) {
             console.log(`Winner is ${winner}`);
             this.restartGame();
+        }
+    },
+    checkTie: function () {
+        if (winner === null) {
+            let isItTie;
+            Gameboard.gameboard.forEach(element => {
+                if (element.includes('X') && !element.includes(0)) {
+                    isItTie = true;
+                }
+
+                if (isItTie) {
+                    console.log(`It's a tie!`);
+                    this.restartGame();
+                }
+            });
         }
     },
     restartGame: function () {
